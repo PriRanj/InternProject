@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+trainer-service,com.app.trainer.api.exception,TrainerNotFoundException,9,6,0,0,4,3,2,1,2,1
+trainer-service,com.app.trainer.api.exception,CustomResponseEntityExceptionHandler,81,0,0,0,19,0,4,0,4,0
+trainer-service,com.app.trainer.api.exception,ExceptionResponse,167,0,30,0,6,0,27,0,12,0
+trainer-service,com.app.trainer.api.controller,TrainerController,63,34,4,2,11,9,7,6,5,5
+trainer-service,com.app.trainer.api.service,TrainerService,16,32,0,2,4,6,3,6,3,5
+trainer-service,com.app.trainer.api,TrainerServiceApplication,5,3,0,0,2,1,1,1,1,1
+trainer-service,com.app.trainer.api.beans,Trainer,244,187,53,21,1,12,49,13,12,13
+trainer-service,com.app.trainer.api.beans,TOC,288,0,44,0,10,0,42,0,20,0

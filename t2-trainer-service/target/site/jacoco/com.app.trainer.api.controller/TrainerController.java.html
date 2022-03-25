@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TrainerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trainer-service</a> &gt; <a href="index.source.html" class="el_package">com.app.trainer.api.controller</a> &gt; <span class="el_source">TrainerController.java</span></div><h1>TrainerController.java</h1><pre class="source lang-java linenums">package com.app.trainer.api.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.trainer.api.beans.TOC;
+import com.app.trainer.api.beans.Trainer;
+import com.app.trainer.api.exception.TrainerNotFoundException;
+import com.app.trainer.api.proxy.TocApiProxy;
+import com.app.trainer.api.service.TrainerService;
+
+@RestController
+<span class="fc" id="L24">public class TrainerController {</span>
+
+	@Autowired
+	private TrainerService trainerService;
+
+	@Autowired
+	private TocApiProxy tocApiProxy;
+
+	@GetMapping(&quot;/&quot;)
+	public String root() {
+<span class="fc" id="L34">		return &quot;Trainer Service is up and running.&quot;;</span>
+	}
+
+	@PostMapping(&quot;/trainer&quot;)
+	public ResponseEntity&lt;?&gt; saveTrainer(@RequestBody Trainer trainer) {
+<span class="fc" id="L39">		Trainer returnedTrainer = trainerService.saveTrainer(trainer);</span>
+<span class="fc" id="L40">		return ResponseEntity.status(HttpStatus.CREATED).body(returnedTrainer);</span>
+	}
+
+	@GetMapping(&quot;/trainer&quot;)
+	public List&lt;Trainer&gt; getAllTrainers() {
+<span class="fc" id="L45">		return trainerService.getAllTrainer();</span>
+	}
+
+	@GetMapping(&quot;/trainer/{name}&quot;)
+	public List&lt;Trainer&gt; getTrainerByName(@PathVariable String name) {
+<span class="nc" id="L50">		return trainerService.getTrainerByName(name);</span>
+	}
+
+	@GetMapping(&quot;/trainerById/{id}&quot;)
+	public Trainer getTrainerById(@PathVariable(&quot;id&quot;) Integer id) throws TrainerNotFoundException {
+<span class="fc" id="L55">		Trainer returnedTrainer = trainerService.getTrainerByIdAsObject(id);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (returnedTrainer == null) {</span>
+<span class="fc" id="L57">			throw new TrainerNotFoundException(&quot;Trainer with id &quot; + id + &quot; not found!!&quot;);</span>
+		}
+<span class="fc" id="L59">		return returnedTrainer;</span>
+	}
+
+	@DeleteMapping(&quot;/trainer/{id}&quot;)
+	public ResponseEntity&lt;?&gt; deleteTrainer(@PathVariable int id) throws TrainerNotFoundException {
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (trainerService.getTrainerById(id).isPresent()) {</span>
+<span class="nc" id="L66">			trainerService.deleteTrainer(id);</span>
+<span class="nc" id="L67">			return ResponseEntity.status(HttpStatus.OK).body(&quot;Trainer Deleted &quot; + id);</span>
+		} else {
+<span class="nc" id="L69">			throw new TrainerNotFoundException(&quot;Trainer Not Found to Delete -&gt; &quot; + id);</span>
+		}
+	}
+
+	@PutMapping(&quot;/trainer&quot;)
+	public ResponseEntity&lt;?&gt; updateTrainer(@RequestBody Trainer trainer) throws TrainerNotFoundException {
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (trainerService.getTrainerById(trainer.getId()).isPresent()) {</span>
+<span class="nc" id="L77">			Trainer updateTrainer = trainerService.updateTrainer(trainer);</span>
+<span class="nc" id="L78">			return ResponseEntity.status(HttpStatus.OK).body(updateTrainer);</span>
+		} else {
+<span class="nc" id="L80">			throw new TrainerNotFoundException(&quot;Trainer Not Found to Update...&quot; + trainer.toString());</span>
+		}
+	}
+
+	@CrossOrigin 
+	@PostMapping(&quot;/trainer/toc&quot;)
+	public ResponseEntity&lt;?&gt; saveToc(@RequestBody TOC toc) {
+<span class="nc" id="L87">		return tocApiProxy.saveToc(toc);</span>
+	}
+
+	@CrossOrigin
+	@GetMapping(&quot;/trainer/toc&quot;)
+	public List&lt;TOC&gt; getTocs(){
+<span class="nc" id="L93">		return tocApiProxy.getTocs();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

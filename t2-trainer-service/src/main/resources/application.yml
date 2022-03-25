@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: TMS 
+      host: tmsmongo
+      port: 27017

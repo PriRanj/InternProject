@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">employee-service</a> &gt; <a href="index.source.html" class="el_package">com.app.employee.api.controller</a> &gt; <span class="el_source">EmployeeController.java</span></div><h1>EmployeeController.java</h1><pre class="source lang-java linenums">package com.app.employee.api.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.employee.api.beans.Employee;
+import com.app.employee.api.exception.EmployeeNotFoundException;
+import com.app.employee.api.service.EmployeeService;
+
+/**
+ * 
+ * @author Priya Ranjan
+ * @see
+ * @since Feb 2022
+ *
+ */
+
+@RestController
+<span class="fc" id="L29">public class EmployeeController {</span>
+
+	@Autowired
+	private EmployeeService empService;
+
+	@GetMapping(&quot;/health&quot;)
+	public String sayHello() {
+<span class="fc" id="L36">		return &quot;Employee Service is Up and running.&quot;;</span>
+	}
+
+	/**
+	 * 
+	 * @author Sumedh Patil
+	 * @see
+	 * @since Feb 2022
+	 *
+	 */
+	@PostMapping(&quot;/registerEmployee&quot;)
+	public ResponseEntity&lt;?&gt; saveEmployee(@RequestBody Employee employee) {
+<span class="fc" id="L48">		Employee returnedEmployee = empService.saveEmployee(employee);</span>
+<span class="fc" id="L49">		return ResponseEntity.status(HttpStatus.CREATED).body(returnedEmployee);</span>
+	}
+
+	@GetMapping(&quot;/get-all-employee&quot;)
+	public List&lt;Employee&gt; getAllEmployees() {
+<span class="fc" id="L54">		return empService.getAllEmployee();</span>
+	}
+
+	@GetMapping(&quot;/find-employee/{name}&quot;)
+	public List&lt;Employee&gt; getEmployeeByName(@PathVariable String name) {
+<span class="fc" id="L59">		return empService.getEmployeeByName(name);</span>
+	}
+
+	@GetMapping(&quot;/findEmployee/{id}&quot;)
+	public Employee getEmployeeById(@PathVariable(&quot;id&quot;) Integer id) throws EmployeeNotFoundException {
+<span class="fc" id="L64">		Employee returnedEmployee = empService.getEmployeeByIdAsObject(id);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (returnedEmployee == null) {</span>
+<span class="fc" id="L66">			throw new EmployeeNotFoundException(&quot;Employee with id &quot; + id + &quot; not found!!&quot;);</span>
+		}
+<span class="fc" id="L68">		return returnedEmployee;</span>
+	}
+
+	@PutMapping(&quot;/employee&quot;)
+	public ResponseEntity&lt;?&gt; updateEmployee(@RequestBody Employee employee) throws EmployeeNotFoundException {
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (empService.getEmployeeById(employee.getId()).isPresent()) {</span>
+<span class="fc" id="L75">			Employee updateEmployee = empService.updateEmployee(employee);</span>
+<span class="fc" id="L76">			return ResponseEntity.status(HttpStatus.OK).body(updateEmployee);</span>
+		} else {
+<span class="fc" id="L78">			throw new EmployeeNotFoundException(&quot;Trainer Not Found to Update...&quot; + employee.toString());</span>
+		}
+	}
+
+	@DeleteMapping(&quot;/delete/{id}&quot;)
+	public ResponseEntity&lt;?&gt; deleteEmployee(@PathVariable int id) throws EmployeeNotFoundException {
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (empService.getEmployeeById(id).isPresent()) {</span>
+<span class="fc" id="L86">			empService.deleteEmployee(id);</span>
+<span class="fc" id="L87">			return ResponseEntity.status(HttpStatus.OK).body(&quot;Employee Deleted &quot; + id);</span>
+		} else {
+<span class="fc" id="L89">			throw new EmployeeNotFoundException(&quot;Employee Not Found to Delete -&gt; &quot; + id);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
