@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TOCNotFoundException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">toc-api</a> &gt; <a href="index.source.html" class="el_package">com.tms.toc.api.exception</a> &gt; <span class="el_source">TOCNotFoundException.java</span></div><h1>TOCNotFoundException.java</h1><pre class="source lang-java linenums">package com.tms.toc.api.exception;
+
+/**
+ * 
+ * If a particular course doesn't found in the database this custom exception will be thrown.
+ * @author Sangita Halder
+ * @since Feb 2022
+ *
+ */
+
+public class TOCNotFoundException extends Exception{
+
+	
+	private static final long serialVersionUID = 1L;
+	private String msg;
+	
+<span class="nc" id="L17">	public TOCNotFoundException() {</span>
+<span class="nc" id="L18">		this.msg = &quot;TOC not found!!&quot;;</span>
+<span class="nc" id="L19">	}</span>
+
+	public TOCNotFoundException(String msg) {
+<span class="fc" id="L22">		super();</span>
+<span class="fc" id="L23">		this.msg = msg;</span>
+<span class="fc" id="L24">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L28">		return msg;</span>
+	}
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

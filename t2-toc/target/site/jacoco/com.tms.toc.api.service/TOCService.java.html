@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TOCService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">toc-api</a> &gt; <a href="index.source.html" class="el_package">com.tms.toc.api.service</a> &gt; <span class="el_source">TOCService.java</span></div><h1>TOCService.java</h1><pre class="source lang-java linenums">package com.tms.toc.api.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tms.toc.api.beans.TOC;
+import com.tms.toc.api.repo.TOCRepository;
+
+/**
+ * 
+ * @author Sangita Halder
+ * @see contains service methods of TOC.
+ * @since feb 2022
+ *
+ */
+
+@Service
+<span class="fc" id="L21">public class TOCService {</span>
+	
+	@Autowired
+	private TOCRepository tocRepo;
+	
+	/**
+	 * 
+	 * Save the TOC into the database and then return the TOC.
+	 * @param toc
+	 * @return saved TOC entity
+	 */
+	public TOC saveTOC(TOC toc) {
+<span class="fc" id="L33">		return tocRepo.insert(toc);</span>
+	}
+	
+	/**
+	 *
+	 * Fetch all the TOC data from the database and return the list of TOC object.
+	 * @return List of TOC objects
+	 */
+	public List&lt;TOC&gt; getAllTocs(){
+<span class="fc" id="L42">		return tocRepo.findAll();</span>
+	}
+	
+	/**
+	 * 
+	 * Retrieves the TOC of mentioned id.
+	 * @param id
+	 * @return the TOC of mentioned id or Optional#empty() if not found
+	 */
+	public Optional&lt;TOC&gt; getTocById(Integer id){
+<span class="fc" id="L52">		return tocRepo.findById(id);</span>
+	}
+	
+	/**
+	 * Returns the particular TOC if found else returns null
+	 * @param id
+	 * @return TOC if found, null if not found
+	 */
+	public TOC getTocByIdAsObject(Integer id){
+<span class="fc" id="L61">		Optional&lt;TOC&gt; byId = tocRepo.findById(id);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		return byId.isPresent()?byId.get(): null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

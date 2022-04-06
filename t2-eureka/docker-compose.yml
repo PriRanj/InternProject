@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  
+  eureka-server:
+    image: eureka-server:1.0
+    container_name: eureka-server
+    ports:
+      - 8761:8761
+      
+  api-gateway:
+    image: api-gateway:1.0
+    container_name: api-gateway
+    ports:
+      - 8765:8765
+
+  tmsmongo:
+    image: mongo:latest
+    container_name: "tmsmongo"
+    ports:
+      - 27017:27017
+      
+  employee-service:
+    image: employee-service:1.0
+    container_name: employee-service
+    ports:
+      - 8100:8100
+    links:
+      - mongo
+      
+  trainer-service:
+    image: trainer-service:1.0
+    container_name: trainer-service
+    ports:
+      - 8200:8200
+    links:
+      - mongo
+      
+  toc-service:
+    image: toc-service:1.0
+    container_name: toc-service
+    ports:
+      - 8300:8300
+    links:
+      - mongo
+  
+  sonarqube :
+    image: sonarqube:latest
+    container_name: "sonar"
+    ports:
+      - 9000:9000
+      
+
+networks:
+    default:
+        name: tms-network

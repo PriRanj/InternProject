@@ -1,0 +1,6 @@
+projectKey=toc-service
+serverUrl=http://localhost:9000
+serverVersion=9.3.0.51899
+dashboardUrl=http://localhost:9000/dashboard?id=toc-service
+ceTaskId=AX8qQdJFQfOXd78SjcQ4
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AX8qQdJFQfOXd78SjcQ4
